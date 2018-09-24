@@ -1,0 +1,116 @@
+---
+title: "BIOS611_Proj1_Kitzmiller"
+author: "Rebecca Kitzmiller"
+date: "September 19, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = './' )
+library(tidyverse)
+library(ggplot2)
+library(quantreg)
+library(magrittr)
+```
+
+
+
+```{r echo = FALSE}
+gss <-gss_cat
+```
+
+
+```{r message=FALSE, warning=FALSE}
+
+summarise(gss, meanage=mean(age, na.rm=TRUE))
+summarise(gss, meantv=mean(tvhours, na.rm=TRUE))
+
+ggplot(data=gss, mapping=aes(x=age, y=tvhours))+
+  geom_vline(xintercept=47.2, color="dark red")+
+  geom_smooth(size=2)+
+  geom_point(color="grey")+
+  annotate("text", label="Ave Age = 47.18 years", x=58, y=17, color='dark red')+
+  theme_bw()+
+  xlab("Age of 2000 Survey Respondent")+
+  ylab("Daily TV Watched (Hours)")+
+  labs(title="Do older americans watch more television?")+
+  labs(caption="source: https://gssdataexplorer.norc.org")
+
+
+```
+
+##The figure above was derived from the year 2000 General Social survey data. Conducted by the NORC, University of Chicago (https://gssdataexplorer.norc.org/) this annual survey is supported by National Science Foundation to provide data for a wide range of constituents including legislators, policymakers, researchers, etc. These data include the following categorical variables: survey year, participant demographics (age, race, marital status, income, political party affiliation, religion and religious denomination) and the number of hours spent watching TV each day.In 2000, n=21, 483 people responded to the survey. On average, respondents were 47 years old and reported watch television just less than 3 hours (2.98) each day. Although it does not appear to be a dramatic increase, time spent each day watching television increases as people age.
+```{r message=FALSE, warning = FALSE}
+tg<-ToothGrowth
+ggplot(data=tg, mapping=aes(x=dose, y=len, color=supp)) +
+  geom_smooth() +
+  annotate ("text", label= "Benefit of dose", x=1.7, y=21)+
+  annotate ("text", label= "and supplement formulation converge", x=1.7, y=19)+
+  xlab("Vitamin C Dose (mg/day") +
+  ylab("Guinea Pig Tooth Length (mm)")+
+  labs(title="An apple a day might keep the doctor away,") +
+  labs(subtitle="but orange juice makes your teeth grow!") +
+  labs(caption="(Based on data from C. I. Bliss (1952). The Statistics of Bioassay. Academic Press.)")
+
+```
+
+
+##Who knew that drinking orange juice daily might improve your teeth? Bliss (1952) evaluated the effect of two formulations of vitamin C (orange juice or ascorbic acid) in three daily dose amounts (0.5 mg, 1.0 mg, or 2.0 mg) on guinea pig tooth length (n=60 guinea pigs). He found that vitamin C in the orange juice formulation promoted more tooth growth then the ascorbic acid formulation. However, the effects of formulation appear to converge at the highest administered dose (2.0 mg/day). Unlike humans, guinea pigs’ teeth continue to grow throughout their lifetime. It is unclear if humans might also achieve tooth benefit from drinking orange juice since teeth form when babies are still in utero.
+
+
+```{r message=FALSE}
+USArrests %>%
+  filter(Assault < 100) %>%
+  ggplot(USArrests, mapping = aes (x= Assault, y= UrbanPop,)) +
+    geom_point(color='brown') +
+      geom_hline(yintercept = 65.54, color = 'blue') +
+  annotate('text', label = 'mean % urban pop 1972', x=62, y=67, color='blue') +
+  annotate('text', label= 'N.Dakota', x=48, y=44, color= "brown")+
+  annotate('text', label= 'Hawaii', x=48, y=83, color= "brown") +
+  annotate('text', label= 'Vermont', x=51, y=32, color= "brown") +
+  annotate('text', label= 'Wisconsin', x=56, y=65, color= "brown") +
+  annotate('text', label= 'Iowa', x=58, y=58, color= "brown") +
+  annotate('text', label= 'N. Hampshire', x=61, y=55, color= "brown") +
+  annotate('text', label= 'Minnesota', x=75, y=65, color= "brown")+
+  annotate('text', label= 'Maine', x=81, y=51, color= "brown") +
+  annotate('text', label= 'W. Virginia', x=78, y=39, color= "brown") +
+  annotate('text', label= 'S.Dakota', x=83, y=45, color= "brown") +
+  xlab("Annual Assaults Arrests per 100,000") +
+  ylab("% Urban Population")+
+  labs(title="Want to avoid crime? Consider living in rural states") +
+    labs(caption="(Based on data Statistical Abstracts 1975.)")
+
+
+
+
+```
+
+##The figure above represents 10 states in the US with the least number of Assault aressts in 1975. These data represent arrest data (murder, assault and rape) collect in 1975 (Statistical Abstracts 1975). Accept for Hawaii, where for than 80% of the population live in urban centers, the majority of th lowest crime states are rural.  
+
+```{r message=FALSE}
+data("trees")
+
+ggplot(data=trees, mapping = aes (x=Girth, y=Volume)) +
+  geom_smooth()+
+
+xlab("Diameter in Inches") +
+  ylab("Cubic Board Feet")+
+  labs(title="Black Cherry Trees: Board feet by Diameter") 
+    
+ggplot(data=trees, mapping = aes (x=Height, y=Volume)) + 
+        geom_smooth() +
+
+xlab("Height in Feet") +
+  ylab("Cubic Board Feet")+
+  labs(title="Black Cherry Trees: Board feet by Height") 
+    
+```
+
+##While typically grown for their fabulous fruit, black cherry trees also produce valuable wood used in furniture production. Black Cherry, worth $349.00 per board foot in 2012, is 6 times more valuable than Red Oak. Using girth, height and volume (cubic feet) collected from 31 trees (source: Ryan, T. A., Joiner, B. L. and Ryan, B. F. (1976) The Minitab Student Handbook. Duxbury Press), we evaluated which type of tree (wide versus tall) would most likely provide more board feet. A 20 inch diameter tree will provide nearly 80 cubic board feet, while a 95 foot tree only produces 50 cubic board feet. Our conclusion? Fat trees provide more wood! 
+
+
+
+
+
+
